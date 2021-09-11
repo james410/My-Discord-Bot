@@ -4,6 +4,7 @@ from core.classes import Cog_Extension
 import datetime
 import random
 import requests
+import json
 
 class Main(Cog_Extension):
     
@@ -37,6 +38,47 @@ class Main(Cog_Extension):
     @commands.command()
     async def clean(self,ctx, num:int):
         await ctx.channel.purge(limit=num+1)
+
+    # #ban成員指令
+    # @commands.command()
+    # async def ban(self, ctx, id):
+    #     await ctx.channel.send(id)
+    #     for member in ctx.guild.members:
+    #         print(member.name)
+    #         if member.name == id:
+    #             await ctx.guild.ban(member)
+
+    #ban成員指令
+    @commands.command()
+    async def ban(self, ctx, name):
+        #await ctx.channel.send(id)
+        for member in ctx.guild.members:
+            print(member.name)
+            if member.name == name:
+                with open('setting.json','r',encoding='utf8') as jfile:
+                    jdata = json.load(jfile)
+                    jdata['banlist'].append(member.name) 
+                with open('setting.json','w',encoding='utf8') as jfile:
+                    json.dump(jdata, jfile, indent=4)#indent = 縮排  = 4 = tab
+                await ctx.guild.ban(member)
+
+
+    #解ban成員指令
+    @commands.command()
+    async def unban(self, ctx, name):
+        bans = await ctx.guild.bans()
+        for banentry in bans:
+            if banentry.user.name == name:
+                await ctx.guild.unban(banentry.user)
+
+    # ######測試<bans:封鎖名單>的指令
+    # @commands.command()
+    # async def tb(self,ctx):
+    #     bans = await ctx.guild.bans()
+    #     for banentry in bans:
+    #         print(banentry.user.name)#封鎖名單中的user裡面的名字
+    # ######
+
 
     @commands.command()
     async def rand_squad(self, ctx):

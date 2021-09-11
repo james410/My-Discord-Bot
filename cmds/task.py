@@ -52,7 +52,7 @@ class Task(Cog_Extension):
             jdata = json.load(jfile)
         jdata['time'] = time
         with open('setting.json','w',encoding='utf8') as jfile:
-            json.dump(jdata, jfile, indent=4)#indent = 縮排
+            json.dump(jdata, jfile, indent=4)#indent = 縮排  = 4 = tab
     
     @commands.command()
     async def task_cancel(self, ctx):

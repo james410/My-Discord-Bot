@@ -23,21 +23,23 @@ class Event(Cog_Extension):
         keyword = ['apple','pen','pie','abc']
         if msg.content in keyword and msg.author != self.bot.user:
             await msg.channel.send('apple')
+#####################################################################################
 
+    # #處理指令發生的錯誤 error handler
+    # @commands.Cog.listener()
+    # async def on_command_error(self, ctx, error):
+    #     #檢查指令是否有自己的error handler
+    #     if hasattr(ctx.command, 'on_error'):
+    #         return 
 
-    #處理指令發生的錯誤 error handler
-    @commands.Cog.listener()
-    async def on_command_error(self, ctx, error):
-        #檢查指令是否有自己的error handler
-        if hasattr(ctx.command, 'on_error'):
-            return 
+    #     if isinstance(error,commands.errors.MissingRequiredArgument):
+    #         await ctx.send("遺失參數")
+    #     elif isinstance(error,commands.errors.CommandNotFound):
+    #        await ctx.send("沒這指令啦!")
+    #     else:
+    #         await ctx.send("發生錯誤")
 
-        if isinstance(error,commands.errors.MissingRequiredArgument):
-            await ctx.send("遺失參數")
-        elif isinstance(error,commands.errors.CommandNotFound):
-           await ctx.send("沒這指令啦!")
-        else:
-            await ctx.send("發生錯誤")
+####################################################################################
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, data):
@@ -58,19 +60,32 @@ class Event(Cog_Extension):
                 await user.remove_roles(role)#給予該成員身分組
                 await user.send(f"你移除了{role}身分組!")
 
+    #delete_count = 0
+    #last_audit_log_id = 0
+
     @commands.Cog.listener()
     async def on_message_delete(self, msg):
-        counter = 1
-        async for audilog in msg.guild.audit_logs(action=discord.AuditLogAction.message_delete):
-            if counter == 1:
-                await msg.channel.send(audilog.user.name)
-                counter = 2
+        delete_count = 0
+        last_audit_log_id = 0
+        deleter = msg.author
+        async for audilog in msg.guild.audit_logs(limit = 10,action=discord.AuditLogAction.message_delete):
+            if (audilog.extra.count - delete_count) != 0 or audilog.id != last_audit_log_id:
+                last_audit_log_id = audilog.id
+                delete_count = audilog.extra.count
+                deleter = audilog.user
+            else:
+                pass
+            mc = audilog.extra.channel
+
+        await msg.channel.send(f"{deleter} has deleted {msg.author} message!")    
             
-
-
-
-
-
+    # @commands.Cog.listener()
+    # async def on_message_delete(self, msg):
+    #     counter = 1
+    #     async for audilog in msg.guild.audit_logs(action=discord.AuditLogAction.message_delete):
+    #         if counter == 1:
+    #             await msg.channel.send(audilog.user.name)
+    #             counter = 2
 
 
 def setup(bot):

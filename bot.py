@@ -7,7 +7,7 @@ import os
 with open('setting.json','r',encoding='utf8') as jFile:
     jdata = json.load(jFile)
 
-intents = discord.Intents.default()
+intents = discord.Intents.all()#預設是default
 intents.members = True
 
 bot = commands.Bot(command_prefix='[',intents = intents)

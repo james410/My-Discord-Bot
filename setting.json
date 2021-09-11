@@ -1,8 +1,12 @@
 {
-    "TOKEN": "ODQ2NzM0NjAyNzYwNzQ5MDk2.YKz1DA.tLbdPKUswUK0YZewpcUyHVO1nrw",
+    "TOKEN": "ODQ2NzM0NjAyNzYwNzQ5MDk2.YKz1DA.K7Bn3MI6tjVBFnvuKFMWd2MG9aU",
     "Welcome_channel": "847007555414654996",
     "Leave_channel": "847007680904036382",
-    "time": "2005",
+    "time": "2000",
+    "banlist": [
+        "",
+        "sinhao"
+    ],
     "pic": [
         "C:\\Users\\james\\Documents\\GitHub\\testbotplz_bot\\pic\\1.jpg",
         "C:\\Users\\james\\Documents\\GitHub\\testbotplz_bot\\pic\\2.gif"
