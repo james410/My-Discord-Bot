@@ -1,4 +1,4 @@
-# testbotplz_bot
+# My Discord Bot
 一個簡單的discord bot
 
 ## 技術說明
