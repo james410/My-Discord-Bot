@@ -17,19 +17,19 @@ async def on_ready():
     print(">> bot is online <<")
 
 
-
+#load function
 @bot.command()
 async def load(ctx, extension):
     bot.load_extension(f'cmds.{extension}')
     await ctx.send(f'Loaded {extension} done.')
     print(f"load {extension}")
-
+#unload function
 @bot.command()
 async def unload(ctx, extension):
     bot.unload_extension(f'cmds.{extension}')
     await ctx.send(f'Un - Loaded {extension} done.')
     print(f"unload {extension}")
-
+#reload function
 @bot.command()
 async def reload(ctx, extension):
     bot.reload_extension(f'cmds.{extension}')
